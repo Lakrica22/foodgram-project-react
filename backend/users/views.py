@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from api.pagination import CustomPageNumberPagination
 from .models import User, Subscription
-from .serializers import CustomUserSerializer, SubscriptionSerializer
+from api.serializers import CustomUserSerializer, SubscriptionSerializer
 
 
 class CustomUserViewSet(UserViewSet):

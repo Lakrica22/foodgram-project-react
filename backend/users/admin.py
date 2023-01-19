@@ -11,5 +11,5 @@ class UserAdmin(admin.ModelAdmin):
 
 
 @admin.register(Subscription)
-class FollowAdmin(admin.ModelAdmin):
+class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'author')
