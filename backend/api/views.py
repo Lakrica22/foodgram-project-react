@@ -13,8 +13,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from recipes.models import Ingredient, Recipe, Tag
 from .filters import IngredientSearchFilter, RecipeFilter
-from .serializers import IngredientSerializer, FavoriteSerializer, RecipeSerializer, RecipeSerializerCreate, ShoppingCartSerializer, TagSerializer
+from .serializers import (IngredientSerializer, FavoriteSerializer,
+                          RecipeSerializer, RecipeSerializerCreate,
+                          ShoppingCartSerializer, TagSerializer)
 from recipes.models import ShoppingCart, Favorite, IngredientRecipe
+
 
 class TagsViewSet(ReadOnlyModelViewSet):
     """
@@ -56,7 +59,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return RecipeSerializer
         else:
             return RecipeSerializerCreate
-    
+
     @staticmethod
     def post_method_for_actions(request, pk, serializers):
         data = {'user': request.user.id, 'recipe': pk}
@@ -64,7 +67,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
     @action(detail=True, methods=["POST"],
             permission_classes=[IsAuthenticated])
     def favorite(self, request, pk):
@@ -112,7 +115,7 @@ class FavoriteViewSet(BaseFavoriteCartViewSet):
 
 
 class DownloadCartView(APIView):
-    
+
     @action(detail=False, methods=['get'],
             permission_classes=[IsAuthenticated])
     def get(self, request):
@@ -126,8 +129,6 @@ class DownloadCartView(APIView):
             'ingredient__name',
             'ingredient__measurement_unit'
         ).annotate(amount=Sum('amount'))
-
-
 
         today = datetime.today()
         shopping_list = (

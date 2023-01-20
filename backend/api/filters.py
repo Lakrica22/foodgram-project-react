@@ -3,6 +3,7 @@ from rest_framework.filters import SearchFilter
 
 from recipes.models import Recipe
 
+
 class IngredientSearchFilter(SearchFilter):
     search_param = 'name'
 

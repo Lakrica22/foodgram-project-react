@@ -78,7 +78,7 @@ class Recipe(models.Model):
         verbose_name='Время приготовления',
         validators=(
             MinValueValidator(
-                1, message='Время приготовления должно быть больше 1 минуты'),),
+                1, message='Время приготовления должно быть больше 1 мин'),),
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата публикации',

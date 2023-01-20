@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class User(AbstractUser):
     username = models.CharField(
         max_length=150,
@@ -25,10 +26,10 @@ class User(AbstractUser):
         blank=True,
         verbose_name='Фамилия пользователя'
     )
-    
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'password']
-    
+
     class Meta:
         ordering = ['id']
         verbose_name = 'Пользователь'

@@ -1,8 +1,11 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from users.views import CustomUserViewSet, SubscriptionListView, SubscriptionViewSet
-from .views import IngredientViewSet, DownloadCartView, RecipeViewSet, TagsViewSet, FavoriteViewSet, CartViewSet
+from users.views import (CustomUserViewSet, SubscriptionListView,
+                         SubscriptionViewSet)
+from .views import (IngredientViewSet, DownloadCartView,
+                    RecipeViewSet, TagsViewSet,
+                    FavoriteViewSet, CartViewSet)
 
 router = DefaultRouter()
 router.register('tags', TagsViewSet, basename='tags')
@@ -31,5 +34,5 @@ urlpatterns = [
                               'delete': 'delete'}), name='cart'),
     path('auth/', include('djoser.urls.authtoken')),
     path('', include('djoser.urls')),
-    path('', include(router.urls)), 
+    path('', include(router.urls)),
 ]
