@@ -89,7 +89,7 @@ class TagSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Tag
-        fields = '__all__'
+        fields = ('name', 'color', 'slug')
         read_only_fields = '__all__',
 
 
@@ -99,7 +99,7 @@ class IngredientSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Ingredient
-        fields = '__all__'
+        fields = ('name', 'measurement_unit')
         read_only_fields = '__all__',
 
 
@@ -189,14 +189,14 @@ class RecipeSerializerCreate(serializers.ModelSerializer):
 
     def validate(self, data):
         ingredients = data['ingredients']
-        ingredients_list = []
+        ingredients_lst = []
         for ingredient in ingredients:
             ingredient_id = ingredient['id']
-            if ingredient_id in ingredients_list:
+            if ingredient_id in ingredients_lst:
                 raise serializers.ValidationError({
                     'ingredients': 'Такой ингридиент уже есть.'
                 })
-            ingredients_list.append(ingredient_id)
+            ingredients_lst.append(ingredient_id)
             amount = ingredient['amount']
             if int(amount) <= 0:
                 raise serializers.ValidationError({

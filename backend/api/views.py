@@ -85,7 +85,7 @@ class BaseFavoriteCartViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        recipe_id = int(self.kwargs['recipes_id'])
+        recipe_id = self.kwargs['recipes_id']
         recipe = get_object_or_404(Recipe, id=recipe_id)
         self.model.objects.create(
             user=request.user, recipe=recipe)
