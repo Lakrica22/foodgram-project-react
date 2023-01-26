@@ -17,6 +17,7 @@ from .serializers import (IngredientSerializer, FavoriteSerializer,
                           RecipeSerializer, RecipeSerializerCreate,
                           ShoppingCartSerializer, TagSerializer)
 from recipes.models import ShoppingCart, Favorite, IngredientRecipe
+from .pagination import CustomPageNumberPagination
 
 
 class TagsViewSet(ReadOnlyModelViewSet):
@@ -48,13 +49,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_class = RecipeFilter
     filter_backends = [DjangoFilterBackend, ]
+    pagination_class = CustomPageNumberPagination
 
     def perform_create(self, serializer):
 
         serializer.save(author=self.request.user)
 
     def get_serializer_class(self):
-
         if self.request.method == 'GET':
             return RecipeSerializer
         else:
