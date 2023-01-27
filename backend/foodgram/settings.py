@@ -13,19 +13,20 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'backend']
 
 
-CSRF_TRUSTED_ORIGINS = [
-    'localhost',
+#CSRF_TRUSTED_ORIGINS = [
+#    'localhost',
 #    'backend',
-]
+#]
 
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
-    'users.apps.UsersConfig',
-    'recipes.apps.RecipesConfig',
+#    'api.apps.ApiConfig',
+#    'users.apps.UsersConfig',
+#    'recipes.apps.RecipesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,6 +36,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'api',
+    'recipes',
+    'users',
 ]
 
 MIDDLEWARE = [
