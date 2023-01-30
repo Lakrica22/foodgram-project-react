@@ -21,10 +21,11 @@ class Command(BaseCommand):
                       encoding='utf-8') as f:
                 datareader = csv.reader(f)
                 for row in datareader:
+                    name, color, slug = row
                     Tag.objects.get_or_create(
-                        name=row[0],
-                        color=row[1],
-                        slug=row[2]
+                        name=name,
+                        color=color,
+                        slug=slug
                     )
         except FileNotFoundError:
             raise CommandError('Добавьте файл tags в директорию data')

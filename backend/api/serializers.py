@@ -81,8 +81,7 @@ class SubscriptionSerializer(CustomUserSerializer):
             )
         return data
     
-    @staticmethod
-    def get_recipes_count(obj):
+    def get_recipes_count(self, obj):
         return obj.recipes.count()
 
     def get_recipes(self, obj):

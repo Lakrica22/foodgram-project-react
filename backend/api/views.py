@@ -26,7 +26,6 @@ class TagsViewSet(ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     permission_classes = (IsAdminOrReadOnly,)
     serializer_class = TagSerializer
-    pagination_class = None
 
 
 class IngredientViewSet(ReadOnlyModelViewSet):
