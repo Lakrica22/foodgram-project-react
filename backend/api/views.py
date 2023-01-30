@@ -11,7 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from recipes.models import Ingredient, Recipe, Tag
 from .filters import IngredientsFilter, RecipeFilter
-from .serializers import (IngredientSerializer, 
+from .serializers import (IngredientSerializer,
                           RecipeSerializer, RecipeSerializerCreate,
                           ShortRecipeSerializer, TagSerializer)
 from recipes.models import ShoppingCart, Favorite, IngredientRecipe
@@ -135,4 +135,3 @@ class RecipeViewSet(viewsets.ModelViewSet):
         response = HttpResponse(shopping_list, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
-

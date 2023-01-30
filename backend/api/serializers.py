@@ -9,7 +9,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField
 from rest_framework.relations import PrimaryKeyRelatedField
 from recipes.models import (Ingredient, IngredientRecipe,
-                            Recipe, Tag, Favorite, ShoppingCart)
+                            Recipe, Tag)
 from users.models import Subscription
 
 User = get_user_model()
@@ -61,11 +61,10 @@ class SubscriptionSerializer(CustomUserSerializer):
     recipes_count = serializers.SerializerMethodField()
 
     class Meta(CustomUserSerializer.Meta):
-#        model = User
         fields = ('email', 'id', 'username', 'first_name', 'last_name',
                   'is_subscribed', 'recipes', 'recipes_count')
         read_only_fields = ('email', 'username')
-    
+
     def validate(self, data):
         author = self.instance
         user = self.context.get('request').user
@@ -80,7 +79,7 @@ class SubscriptionSerializer(CustomUserSerializer):
                 code=status.HTTP_400_BAD_REQUEST
             )
         return data
-    
+
     def get_recipes_count(self, obj):
         return obj.recipes.count()
 
@@ -121,21 +120,6 @@ class AddIngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = IngredientRecipe
         fields = ('id', 'amount')
-
-
-#class IngredientAmountSerializer(serializers.ModelSerializer):
-#    """
-#    Сериализатор для получения количества ингредиентов.
-#    """
-#    id = serializers.ReadOnlyField(source='ingredient.id')
-#    name = serializers.ReadOnlyField(source='ingredient.name')
-#    measurement_unit = serializers.ReadOnlyField(
-#        source='ingredient.measurement_unit'
-#    )
-
-#    class Meta:
-#        model = IngredientRecipe
-#        fields = ('id', 'name', 'measurement_unit', 'amount')
 
 
 class ShortRecipeSerializer(serializers.ModelSerializer):
@@ -190,13 +174,13 @@ class RecipeSerializer(serializers.ModelSerializer):
         if user.is_anonymous:
             return False
         return user.favourites.filter(recipe=obj).exists()
-        
+
     def get_is_in_shopping_cart(self, obj):
         user = self.context.get('request').user
         if user.is_anonymous:
             return False
         return user.carts.filter(recipe=obj).exists()
-    
+
 
 class RecipeSerializerCreate(serializers.ModelSerializer):
     """

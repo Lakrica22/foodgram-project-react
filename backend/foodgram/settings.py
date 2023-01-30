@@ -14,19 +14,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'backend']
-
-
-#CSRF_TRUSTED_ORIGINS = [
-#    'localhost',
-#    'backend',
-#]
 
 
 INSTALLED_APPS = [
-#    'api.apps.ApiConfig',
-#    'users.apps.UsersConfig',
-#    'recipes.apps.RecipesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
