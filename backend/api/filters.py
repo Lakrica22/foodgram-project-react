@@ -21,7 +21,7 @@ class RecipeFilter(FilterSet):
     Фильтр для сортировки рецептов по:
     тегам, нахождению в избранном и корзине.
     """
-    tags = filters.AllValuesMultipleFilter(field_name='tags_slug')
+    tags = filters.AllValuesMultipleFilter(field_name='tags')
     is_favorited = filters.BooleanFilter(method='filter_is_favorited')
     is_in_shopping_cart = filters.BooleanFilter(
         method='filter_is_in_shopping_cart'
@@ -31,9 +31,14 @@ class RecipeFilter(FilterSet):
         model = Recipe
         fields = ('tags', 'author')
 
+    #def filter_is_favorited(self, queryset, name, value):
+    #    if value:
+    #        return queryset.filter(favourites=self.request.user)
+    #    return queryset
     def filter_is_favorited(self, queryset, name, value):
-        if value:
-            return queryset.filter(favourites=self.request.user)
+        user = self.request.user
+        if value and not user.is_anonymous:
+            return queryset.filter(favourites__user=user)
         return queryset
 
     def filter_is_in_shopping_cart(self, queryset, name, value):

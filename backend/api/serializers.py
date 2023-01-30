@@ -9,7 +9,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField
 from rest_framework.relations import PrimaryKeyRelatedField
 from recipes.models import (Ingredient, IngredientRecipe,
-                            Recipe, Tag)
+                            Recipe, Tag, Favorite, ShoppingCart)
 from users.models import Subscription
 
 User = get_user_model()
@@ -80,7 +80,8 @@ class SubscriptionSerializer(CustomUserSerializer):
                 code=status.HTTP_400_BAD_REQUEST
             )
         return data
-
+    
+    @staticmethod
     def get_recipes_count(obj):
         return obj.recipes.count()
 
@@ -196,7 +197,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         if user.is_anonymous:
             return False
         return user.carts.filter(recipe=obj).exists()
-
+    
 
 class RecipeSerializerCreate(serializers.ModelSerializer):
     """

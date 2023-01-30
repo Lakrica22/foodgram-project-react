@@ -46,7 +46,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthorOrReadOnly | IsAdminOrReadOnly,)
-    filter_class = RecipeFilter
+    filterset_class = RecipeFilter
     filter_backends = (DjangoFilterBackend,)
     pagination_class = CustomPageNumberPagination
 
@@ -66,7 +66,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
     @action(
         detail=True,
         methods=['post', 'delete'],
