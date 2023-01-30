@@ -85,7 +85,7 @@ jobs:
           host: ${{ secrets.SERVER_PUBLIC_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_SERVER_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SERVER_PASSPHRASE }}
+          #passphrase: ${{ secrets.SERVER_PASSPHRASE }}
           script: |
             cd infra/
             sudo rm -f .env      
