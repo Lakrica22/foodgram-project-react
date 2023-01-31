@@ -38,9 +38,7 @@ jobs:
       - name: Login to Docker
         uses: docker/login-action@v1
         with:
-          # Имя пользователя в Docker-Hub
           username: ${{ secrets.DOCKER_USERNAME }} 
-          # Пароль в Docker-Hub
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
@@ -72,6 +70,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend:latest
 
   deploy:
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
     name: Deploying on remote server
     runs-on: ubuntu-latest
     needs:
@@ -90,8 +89,7 @@ jobs:
             cd infra/
             sudo rm -f .env      
             sudo touch .env
-            # Задаём право доступа к файлу с переменными окружения
-            sudo chmod 666 .env
+          #  sudo chmod 666 .env
             
             sudo echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             sudo echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
