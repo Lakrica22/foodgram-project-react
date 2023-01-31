@@ -2,21 +2,23 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from recipes.models import Ingredient, Recipe, Tag
 from .filters import IngredientsFilter, RecipeFilter
-from .serializers import (IngredientSerializer,
-                          RecipeSerializer, RecipeSerializerCreate,
-                          ShortRecipeSerializer, TagSerializer)
-from recipes.models import ShoppingCart, Favorite, IngredientRecipe
 from .pagination import CustomPageNumberPagination
 from .permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
+from .serializers import (
+    IngredientSerializer, RecipeSerializer, RecipeSerializerCreate,
+    ShortRecipeSerializer, TagSerializer,
+)
+from recipes.models import (
+    Favorite, Ingredient, IngredientRecipe, Recipe, ShoppingCart, Tag,
+)
 
 
 class TagsViewSet(ReadOnlyModelViewSet):
@@ -55,8 +57,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
             return RecipeSerializer
-        else:
-            return RecipeSerializerCreate
+        return RecipeSerializerCreate
 
     @staticmethod
     def post_method_for_actions(request, pk, serializers):
@@ -74,8 +75,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def favorite(self, request, pk):
         if request.method == 'POST':
             return self.add_to(Favorite, request.user, pk)
-        else:
-            return self.delete_from(Favorite, request.user, pk)
+        return self.delete_from(Favorite, request.user, pk)
 
     @action(
         detail=True,
@@ -85,8 +85,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def shopping_cart(self, request, pk):
         if request.method == 'POST':
             return self.add_to(ShoppingCart, request.user, pk)
-        else:
-            return self.delete_from(ShoppingCart, request.user, pk)
+        return self.delete_from(ShoppingCart, request.user, pk)
 
     def add_to(self, model, user, pk):
         if model.objects.filter(user=user, recipe__id=pk).exists():
