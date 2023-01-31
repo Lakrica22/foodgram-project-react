@@ -56,3 +56,10 @@ Django REST Framework
 PostgreSQL
 GitHubActions
 
+### Проект доступен по адресу:
+Адрес сайта - http://51.250.64.188/
+
+### Данные администратора:
+Данные электронной почты - Admin@yandex.ru
+Пароль - Admin1234
+Уникальный юзернэйм - Admin
