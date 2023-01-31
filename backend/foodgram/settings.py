@@ -9,7 +9,7 @@ AUTH_USER_MODEL = "users.User"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', default='1234')
 
 DEBUG = False
 
